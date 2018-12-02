@@ -45,7 +45,16 @@ end
 
 _G.mouseEvent = game:GetService("UserInputService").InputBegan:connect(toggle)
 
+local stepTime = 1.0/60.0
+local aimTime = 1.0/10.0
+local numOfSteps = aimTime / stepTime
+local i = 0
+
 function step() -- On
+	i = i+1
+	if i > numOfSteps or not _G.aiming or not _G.aimbot or _G.destroy then 
+		i = 0
+	end
     if not _G.destroy and _G.aimbot and _G.aiming then
         local localPlayerBody = _G.LocalPlayer.Character
         local Camera = workspace.CurrentCamera
@@ -54,8 +63,8 @@ function step() -- On
             local head = localPlayerBody.Head
 
             if head ~= nil and _G.target ~= nil and localPlayerBody:WaitForChild("Humanoid") ~= nil then
-                Camera.CFrame = CFrame.new(head.Position, _G.target.Position)
-            end
+				Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(head.Position, _G.target.Position), i/numOfSteps)
+			end
         end
     end
 end
@@ -88,14 +97,15 @@ function findTarget(show)
     end
 end
 
-function run()
+local debug = false
 
+function run()
     while not _G.destroy do
         if _G.aimbot then
             local localPlayerBody = _G.LocalPlayer.Character
             if localPlayerBody ~= nil and localPlayerBody:WaitForChild("Humanoid").Health ~= 0 then
                 local head = localPlayerBody.Head
-                local target = findTarget(false)
+                local target = findTarget(debug)
 
                 if target ~= nil and head ~= nil then
                     if target.Parent ~= nil and target.Parent.Humanoid ~= nil then
