@@ -63,7 +63,7 @@ function step() -- On
             local head = localPlayerBody.Head
 
             if head ~= nil and _G.target ~= nil and localPlayerBody:WaitForChild("Humanoid") ~= nil then
-				Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(head.Position, _G.target.Position), i/numOfSteps)
+				Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(head.Position, _G.target.Position + Vector3.new(0, head.Size/2, 0)), i/numOfSteps)
 			end
         end
     end
