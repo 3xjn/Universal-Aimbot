@@ -9,7 +9,7 @@ while wait() do
 			BillboardGui.Parent = game.Workspace[players[i].Name].Head
 			BillboardGui.Active = true
 			BillboardGui.AlwaysOnTop = true
-			BillboardGui.LightInfluence = 1
+			BillboardGui.LightInfluence = 0
 			BillboardGui.Size = UDim2.new(0, 20, 0, 20)
 			
 			Frame.Parent = BillboardGui
@@ -23,7 +23,7 @@ while wait() do
 			BillboardGui.Parent = game.Workspace[players[i].Name].Head
 			BillboardGui.Active = true
 			BillboardGui.AlwaysOnTop = true
-			BillboardGui.LightInfluence = 1
+			BillboardGui.LightInfluence = 0
 			BillboardGui.Size = UDim2.new(0, 20, 0, 20)
 			
 			Frame.Parent = BillboardGui
