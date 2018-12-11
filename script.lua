@@ -76,7 +76,7 @@ function findTarget(show)
     local myPos = me.Position
     local players = game.Players:GetPlayers()
 
-    table.sort(distances, function (left, right)
+    table.sort(players, function (left, right)
         local leftC = left.Character:FindFirstChild("HumanoidRootPart")
         local rightC = right.Character:FindFirstChild("HumanoidRootPart")
 
