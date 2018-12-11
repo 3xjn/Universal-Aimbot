@@ -72,14 +72,25 @@ end
 _G.cameraEvent = game:GetService('RunService').Stepped:Connect(step)
 
 function findTarget(show)
+    local me = _G.LocalPlayer.Character.Head
+    local myPos = me.Position
     local players = game.Players:GetPlayers()
-    for i=0, #players do
-        local player = players[i]
+
+    table.sort(distances, function (left, right)
+        local leftC = left.Character:FindFirstChild("HumanoidRootPart")
+        local rightC = right.Character:FindFirstChild("HumanoidRootPart")
+
+        local leftD = (leftC.Position - myPos).Magnitude
+        local rightD = (rightC.Position - myPos).Magnitude
+
+        return leftD < rightD
+    end)
+
+    for i=1, #players do
+        local player = players[index]
         if player ~= nil then
             if player.TeamColor ~= _G.LocalPlayer.TeamColor then
-                local me = _G.LocalPlayer.Character.Head
-
-                local myPos = me.Position
+                
                 local playerChar = player.Character
                 if playerChar ~= nil and playerChar:WaitForChild("Humanoid").Health ~= 0 then
                     local targetPos = playerChar.Head.Position
