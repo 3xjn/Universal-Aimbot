@@ -39,6 +39,9 @@ function toggle(inputObject, gameProcessedEvent)
         _G.aimbot = not _G.aimbot
         print("Aimbot: "..tostring(_G.aimbot))
         run()
+    elseif inputObject.KeyCode == Enum.KeyCode.J then
+        _G.debug = not _G.debug
+		print("Debug: ".. tostring(_G.debug))
     elseif inputObject.KeyCode == Enum.KeyCode.O then
         if _G.mouseEvent ~= nil and _G.cameraEvent ~= nil then
             print("Destroying keyboard and camera hooks")
@@ -53,7 +56,7 @@ end
 _G.mouseEvent = game:GetService("UserInputService").InputBegan:connect(toggle)
 
 local stepTime = 1.0/60.0
-local aimTime = 1.0/10.0
+local aimTime = 1.0/7.5
 local numOfSteps = aimTime / stepTime
 local i = 0
 
