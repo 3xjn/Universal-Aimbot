@@ -2,8 +2,15 @@ _G.LocalPlayer = game.Players.LocalPlayer
 _G.newcam = false
 _G.aimbot = false
 _G.destroy = false
+_G.debug = true
 
 local refresh = 0.05
+
+function printd(text)
+    if _G.debug then
+        print(text)
+    end
+end
 
 function MakeRay(startPos, endPos, show) -- Creates a new ray
     local dir = endPos - startPos
@@ -75,10 +82,17 @@ function findTarget(show)
     local me = _G.LocalPlayer.Character.Head
     local myPos = me.Position
     local players = game.Players:GetPlayers()
+    local playersWithChars = {}
 
-    table.sort(players, function (left, right)
-        local leftC = left.Character:FindFirstChild("HumanoidRootPart")
-        local rightC = right.Character:FindFirstChild("HumanoidRootPart")
+    for i=1, #players do
+        if players[i].Character ~= nil and players[i].Character:FindFirstChild("Head") ~= nil then
+            table.insert(playersWithChars, players[i])
+        end
+    end
+
+    table.sort(playersWithChars, function (left, right)
+        local leftC = left.Character.Head
+        local rightC = right.Character.Head
 
         local leftD = (leftC.Position - myPos).Magnitude
         local rightD = (rightC.Position - myPos).Magnitude
@@ -86,8 +100,8 @@ function findTarget(show)
         return leftD < rightD
     end)
 
-    for i=1, #players do
-        local player = players[index]
+    for i=1, #playersWithChars do
+        local player = playersWithChars[i]
         if player ~= nil then
             if player.TeamColor ~= _G.LocalPlayer.TeamColor then
                 
@@ -108,15 +122,13 @@ function findTarget(show)
     end
 end
 
-local debug = false
-
 function run()
     while not _G.destroy do
         if _G.aimbot then
             local localPlayerBody = _G.LocalPlayer.Character
             if localPlayerBody ~= nil and localPlayerBody:WaitForChild("Humanoid").Health ~= 0 then
                 local head = localPlayerBody.Head
-                local target = findTarget(debug)
+                local target = findTarget(_G.debug)
 
                 if target ~= nil and head ~= nil then
                     if target.Parent ~= nil and target.Parent.Humanoid ~= nil then
