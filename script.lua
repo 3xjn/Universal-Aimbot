@@ -1,6 +1,7 @@
 _G.LocalPlayer = game.Players.LocalPlayer
 _G.newcam = false
 _G.aimbot = false
+_G.teamcheck = true
 _G.destroy = false
 _G.debug = true
 
@@ -39,6 +40,9 @@ function toggle(inputObject, gameProcessedEvent)
         _G.aimbot = not _G.aimbot
         print("Aimbot: "..tostring(_G.aimbot))
         run()
+	elseif inputObject.KeyCode == Enum.KeyCode.K then
+		_G.teamcheck = not _G.teamcheck
+		print("TeamCheck: " .. tostring(_G.teamcheck))
     elseif inputObject.KeyCode == Enum.KeyCode.J then
         _G.debug = not _G.debug
 		print("Debug: ".. tostring(_G.debug))
@@ -56,7 +60,7 @@ end
 _G.mouseEvent = game:GetService("UserInputService").InputBegan:connect(toggle)
 
 local stepTime = 1.0/60.0
-local aimTime = 1.0/7.5
+local aimTime = 1.0/20
 local numOfSteps = aimTime / stepTime
 local i = 0
 
@@ -106,7 +110,7 @@ function findTarget(show)
     for i=1, #playersWithChars do
         local player = playersWithChars[i]
         if player ~= nil then
-            if player.TeamColor ~= _G.LocalPlayer.TeamColor then
+            if player.TeamColor ~= _G.LocalPlayer.TeamColor or not _G.teamcheck then
                 
                 local playerChar = player.Character
                 if playerChar ~= nil and playerChar:WaitForChild("Humanoid").Health ~= 0 then
