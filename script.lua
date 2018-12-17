@@ -7,6 +7,9 @@ _G.destroy = false
 _G.debug = true
 
 local refresh = 0.05
+local Rays = Instance.new("Folder", game.workspace)
+Rays.Name = "Rays"
+print(Rays:GetFullName())
 
 function printd(text)
     if _G.debug then
@@ -20,7 +23,7 @@ function MakeRay(startPos, endPos, show) -- Creates a new ray
     local ray = Ray.new(startPos, dir)
     local obj, endPoint = workspace:FindPartOnRay(ray)
     if show then -- This is for debugging. It will make the rays visible
-        local rayPart = Instance.new("Part", workspace)
+        local rayPart = Instance.new("Part", game.workspace.Rays)
         rayPart.Name          = "RayPart"
         rayPart.BrickColor    = BrickColor.new("Bright red")
         rayPart.Transparency  = 0
@@ -39,6 +42,10 @@ end
 function toggle(inputObject, gameProcessedEvent)
     if inputObject.KeyCode == Enum.KeyCode.L then
         _G.aimbot = not _G.aimbot
+        if _G.aimbot == false then
+            Rays:ClearAllChildren()
+			print('Aimbot: Cleared Rays')
+        end
         print("Aimbot: "..tostring(_G.aimbot))
         run()
 	elseif inputObject.KeyCode == Enum.KeyCode.K then
@@ -46,6 +53,10 @@ function toggle(inputObject, gameProcessedEvent)
 		print("TeamCheck: " .. tostring(_G.teamcheck))
     elseif inputObject.KeyCode == Enum.KeyCode.J then
         _G.debug = not _G.debug
+        if _G.debug == false then
+            Rays:ClearAllChildren()
+			print('Debug: Cleared Rays')
+        end
 		print("Debug: ".. tostring(_G.debug))
 	elseif inputObject.KeyCode == Enum.KeyCode.H then
 		_G.autoshoot = not _G.autoshoot
@@ -57,6 +68,8 @@ function toggle(inputObject, gameProcessedEvent)
             _G.aimbot = false
             _G.mouseEvent:Disconnect()
             _G.cameraEvent:Disconnect()
+            Rays:Destroy()
+			print('Disconnect: Destroyed Rays')
         end
     end
 end
