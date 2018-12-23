@@ -2,7 +2,6 @@ _G.LocalPlayer = game.Players.LocalPlayer
 _G.newcam = false
 _G.aimbot = false
 _G.teamcheck = true
-_G.autoshoot = true
 _G.destroy = false
 _G.debug = true
 
@@ -58,9 +57,6 @@ function toggle(inputObject, gameProcessedEvent)
 			print('Debug: Cleared Rays')
         end
 		print("Debug: ".. tostring(_G.debug))
-	elseif inputObject.KeyCode == Enum.KeyCode.H then
-		_G.autoshoot = not _G.autoshoot
-		print("Autoshoot: " .. tostring(_G.autoshoot))
     elseif inputObject.KeyCode == Enum.KeyCode.O then
         if _G.mouseEvent ~= nil and _G.cameraEvent ~= nil then
             print("Destroying keyboard and camera hooks")
@@ -95,11 +91,6 @@ function step() -- On
 
             if head ~= nil and _G.target ~= nil and localPlayerBody:WaitForChild("Humanoid") ~= nil then
 				Camera.CFrame = Camera.CFrame:Lerp(CFrame.new(head.Position, _G.target.Position + Vector3.new(0, head.Size/2, 0)), i/numOfSteps)
-				if _G.autoshoot == true then
-					mouse1press()
-					wait(0.01)
-					mouse1release()
-				end
 			end
         end
     end
