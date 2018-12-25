@@ -133,7 +133,7 @@ function findTarget(show)
                     local directionM = direction.unit
 
                     local hit = MakeRay(me.Position + directionM*1.5, targetPos + directionM*5, show)
-                    if hit ~= nil and hit.Parent ~= nil and hit.Parent.Name == player.Name then
+                    if hit ~= nil and hit.Parent ~= nil and hit.Parent.Name == player.Name and hit.CanCollide == false then
                         return hit
                     end
                 end
