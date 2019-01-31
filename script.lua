@@ -1,3 +1,4 @@
+local speed = 3 -- 3 = Legit, 6 = Smooth, 10 = Really Fast, 20 = Instant
 _G.LocalPlayer = game.Players.LocalPlayer
 _G.newcam = false
 _G.aimbot = false
@@ -73,7 +74,7 @@ end
 _G.mouseEvent = game:GetService("UserInputService").InputBegan:connect(toggle)
 
 local stepTime = 1.0/60.0
-local aimTime = 1.0/20
+local aimTime = 1.0/speed
 local numOfSteps = aimTime / stepTime
 local i = 0
 
